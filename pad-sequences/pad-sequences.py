@@ -8,21 +8,14 @@ def pad_sequences(seqs, pad_value=0, max_len=None):
     """
     # Your code here
     if not max_len:
-        max_len = max([len(seq) for seq in seqs])
+        max_len = max([len(s) for s in seqs])
 
-    seqs = [seq[:max_len] for seq in seqs]
+    batch = len(seqs)
 
-    rows = len(seqs)
-    cols = max_len
+    dummy_tensor = np.full((batch, max_len), pad_value)
 
-    dummy_tensor = np.full((rows, cols), pad_value)
-
-    for i in range(len(seqs)):
-        seq = seqs[i]
-        dummy_tensor[i, :len(seq)] = seq
+    for i, s in enumerate(seqs):
+        s = s[:max_len]
+        dummy_tensor[i, :len(s)] = s
 
     return dummy_tensor
-        
-    
-        
-        
